@@ -1,6 +1,10 @@
 package br.com.alura.estoque.retrofit;
 
+import java.io.IOException;
+
 import br.com.alura.estoque.retrofit.service.ProdutoService;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,9 +14,16 @@ public class EstoqueRetrofit {
 
     //6min
     public EstoqueRetrofit() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+
         //Configurando instancia do nosso retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.163:8080/")
+                .baseUrl("http://192.168.0.166:8080/")
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         produtoService = retrofit.create(ProdutoService.class);

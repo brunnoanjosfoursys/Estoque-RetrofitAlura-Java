@@ -53,13 +53,16 @@ public class ListaProdutosActivity extends AppCompatActivity {
         new BaseAsyncTask<>(() -> {
             //Execucao sincrona
             try {
+                Thread.sleep(3000);
                 Response<List<Produto>> resposta = call.execute();
                 List<Produto> produtosNovos = resposta.body();
-                return produtosNovos;
+                dao.salva(produtosNovos);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            return null;
+            return dao.buscaTodos();
         }, produtosNovos -> {
             //Quando recebermos os produtos, oque queremos fazer?
             if (produtosNovos != null) {
@@ -69,12 +72,10 @@ public class ListaProdutosActivity extends AppCompatActivity {
             }
         }).execute();
 
-        /*
-        Dados locais com ROOM
+        //Buscando Dados locais com ROOM, enquanto a outra asynctask da requisição ainda não terminou
         new BaseAsyncTask<>(dao::buscaTodos,
                 resultado -> adapter.atualiza(resultado))
                 .execute();
-        */
     }
 
     private void configuraListaProdutos() {
