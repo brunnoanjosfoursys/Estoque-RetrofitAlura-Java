@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 public class BaseAsyncTask<T> extends AsyncTask<Void, Void, T> {
 
+    //AsyncTask Genérica para ser usada em qualquer implementação
+
     private final ExecutaListener<T> executaListener;
     private final FinalizadaListener<T> finalizadaListener;
 
