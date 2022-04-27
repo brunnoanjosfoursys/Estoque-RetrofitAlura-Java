@@ -5,10 +5,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
-public class BaseCallback<T> implements Callback<T> {
+public class CallbackComRetorno<T> implements Callback<T> {
     private final RespostaCallback<T> callback;
 
-    public BaseCallback(RespostaCallback<T> callback) {
+    public CallbackComRetorno(RespostaCallback<T> callback) {
         this.callback = callback;
     }
 
@@ -37,7 +37,6 @@ public class BaseCallback<T> implements Callback<T> {
     //Callback próprio para notificar quem fazer o uso dessa implementação
     public interface RespostaCallback<T> {
         void quandoSucesso(T resultado);
-
         void quandoFalha(String erro);
     }
 }
